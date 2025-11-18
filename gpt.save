@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+import OpenAI from "openai";
+import fs from "fs";
+
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+const prompt = process.argv.slice(2).join(" ");
+
+(async () => {
+  const completion = await client.chat.completions.create({
+    model: "gpt-4.1",
+    messages: [
+      { role: "system", content: "You are a professional software engineer helping the user in their local repository. When 
+given errors or file paths, provide exact fixes with codeblocks." },
+      { role: "user", content: prompt }
+    ]
+  });
+
+  console.log(completion.choices[0].message.content);
+})();
+c`xxx
